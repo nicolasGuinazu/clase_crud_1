@@ -1,10 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-
-const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
+const read=require('../data/productdb')
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const products=read()
 
 const controller = {
 	index: (req, res) => {
@@ -19,8 +15,16 @@ const controller = {
 		res.render('index', viewData)
 	},
 	search: (req, res) => {
-		// Do the magic
+	 	let search=req.query.keywords
+		const searched = products.filter((product) => product.name.toLowerCase().includes(search.toLowerCase()));
+
+		res.render('results',{searched}) 
 	},
+	admin: (req, res) => {
+
+	   res.render('admin-panel') 
+   },
+	
 };
 
 module.exports = controller;

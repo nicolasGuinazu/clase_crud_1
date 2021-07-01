@@ -1,15 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-
-const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
+const read=require('../data/productdb')
+let products=read()
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
-		// Do the magic
+		res.render('products',{products})
 	},
 
 	// Detail - Detail from one product
@@ -27,17 +22,21 @@ const controller = {
 
 	// Create - Form to create
 	create: (req, res) => {
-		// Do the magic
+		res.render('product-create-form')
+
 	},
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		// Do the magic
+		res.send('FUI POR POST!')
 	},
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		// Do the magic
+		const id = req.params.id;
+		const product = products.find((prod) => prod.id == id);
+
+		res.render('product-edit-form',{product})
 	},
 	// Update - Method to update
 	update: (req, res) => {

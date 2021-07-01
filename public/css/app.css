@@ -380,7 +380,9 @@ hr {
 .action-button.delete {
   background-color: rgb(248, 69, 37);
 }
-
+.action-button.product {
+  background-color: rgb(248, 37, 220);
+}
 
 /*====== Formularios ======*/
 .form-label {

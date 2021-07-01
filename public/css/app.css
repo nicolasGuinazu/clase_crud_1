@@ -372,6 +372,7 @@ hr {
   justify-content: center;
   padding: 15px 30px;
   margin-top: 15px;
+  cursor: pointer;
 }
 
 .action-button.edit {

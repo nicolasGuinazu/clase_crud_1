@@ -1,4 +1,4 @@
-const read=require('../data/productdb')
+const {read}=require('../data/productsDb')
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const products=read()
 

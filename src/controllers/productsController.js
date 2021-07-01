@@ -1,5 +1,6 @@
+
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const read=require('../data/productdb')
+const {read,erase}=require('../data/productsDb')
 let products=read()
 const controller = {
 	// Root - Show all products
@@ -40,12 +41,13 @@ const controller = {
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		// Do the magic
+		res.send('FUI POR PUT!')
 	},
 
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
-		// Do the magic
+		let idDelete=req.params.id
+		erase(idDelete)
 	}
 };
 

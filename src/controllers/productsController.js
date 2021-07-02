@@ -1,6 +1,6 @@
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const {read,erase}=require('../data/productsDb')
+const {read,erase,create}=require('../data/productsDb')
 let products=read()
 const controller = {
 	// Root - Show all products
@@ -29,7 +29,18 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		res.send('FUI POR POST!')
+		let newProduct={
+			id:new Date(),
+			name:req.body.name,
+			price:req.body.price,
+			discount:req.body.discount,
+			category:req.body.category,
+			description:req.body.description,
+			image:req.file.filename,
+		}
+		
+		create(newProduct)
+		res.redirect('products')
 	},
 
 	// Update - Form to edit

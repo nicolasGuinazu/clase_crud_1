@@ -1,6 +1,6 @@
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const {read,erase,create}=require('../data/productsDb')
+const {read,erase,create,update}=require('../data/productsDb')
 let products=read()
 const controller = {
 	// Root - Show all products
@@ -12,7 +12,7 @@ const controller = {
 	detail: (req, res) => {
 		const id = req.params.identificador;
 		const product = products.find((prod) => prod.id == id);
-
+		console.log(product)
 		const viewData = {
 			product,
 			titulo: 'Hola'
@@ -30,7 +30,7 @@ const controller = {
 	// Create -  Method to store
 	store: (req, res) => {
 		let newProduct={
-			id:new Date(),
+			id:Math.random(),
 			name:req.body.name,
 			price:req.body.price,
 			discount:req.body.discount,
@@ -52,13 +52,23 @@ const controller = {
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		res.send('FUI POR PUT!')
+		let idUpdate=req.params.id
+		let modifiedProduct={
+			name:req.body.name,
+			price:req.body.price,
+			discount:req.body.discount,
+			category:req.body.category,
+			description:req.body.description,
+		}
+		update(idUpdate,modifiedProduct)
+		res.redirect('/')
 	},
 
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
 		let idDelete=req.params.id
 		erase(idDelete)
+		res.redirect('/')
 	}
 };
 

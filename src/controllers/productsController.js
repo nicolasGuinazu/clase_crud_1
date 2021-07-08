@@ -1,6 +1,8 @@
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const {read,erase,create,update}=require('../data/productsDb')
+const {validationResult}=require('express-validator')
+
 let products=read()
 const controller = {
 	// Root - Show all products
@@ -59,6 +61,13 @@ const controller = {
 			discount:req.body.discount,
 			category:req.body.category,
 			description:req.body.description,
+		}
+		const product = products.find((prod) => prod.id == idUpdate)
+		let errores=validationResult(req);
+		if (!errores.isEmpty()){
+		
+			return(res.render('product-edit-form',{product,
+				errors:errores.array(),}))
 		}
 		update(idUpdate,modifiedProduct)
 		res.redirect('/')

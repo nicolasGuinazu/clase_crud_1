@@ -2,9 +2,18 @@
 const express = require('express');
 const router = express.Router();
 const multer=require('multer')
+const {body}=require('express-validator')
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
+
+// ************ Validations ************
+const validateEditForm=[
+  body('name').notEmpty().withMessage('El campo nombre no puede estar vacio'),
+  body('price').notEmpty().withMessage('El campo precio no puede estar vacio'),
+  body('description').notEmpty().withMessage('El campo descripcion no puede estar vacio')
+]
+  
 
 // ************ Multer ************
 let storage = multer.diskStorage({
@@ -31,8 +40,8 @@ router.post('/', upload.single('image'), productsController.store);
 router.get('/:identificador/', productsController.detail); 
 
 /*** EDIT ONE PRODUCT ***/
-router.get('/:id/edit', productsController.edit); 
-router.put('/:id', productsController.update); 
+router.get('/:id/edit',productsController.edit); 
+router.put('/:id', validateEditForm,productsController.update); 
 
 
 /*** DELETE ONE PRODUCT***/ 

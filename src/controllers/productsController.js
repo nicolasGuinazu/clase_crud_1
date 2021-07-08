@@ -67,7 +67,7 @@ const controller = {
 		if (!errores.isEmpty()){
 		
 			return(res.render('product-edit-form',{product,
-				errors:errores.array(),}))
+				errors:errores.mapped(),}))
 		}
 		update(idUpdate,modifiedProduct)
 		res.redirect('/')

@@ -31,6 +31,12 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
+		let loadedImage
+		if(typeof req.file !== "undefined"){
+			loadedImage=req.file.filename
+		}else{
+			loadedImage=''
+		}
 		let newProduct={
 			id:Math.random(),
 			name:req.body.name,
@@ -38,11 +44,19 @@ const controller = {
 			discount:req.body.discount,
 			category:req.body.category,
 			description:req.body.description,
-			image:req.file.filename,
+			image:loadedImage,
 		}
+
 		
-		create(newProduct)
-		res.redirect('products')
+		let errores=validationResult(req);
+		if (!errores.isEmpty()){
+			return (res.render('product-create-form',{
+				errors:errores.mapped()}))
+		}else{
+			create(newProduct)
+			res.redirect('products')
+		} 
+		
 	},
 
 	// Update - Form to edit

@@ -20,7 +20,7 @@
 					
 					<div class="col-12 col-md-6">
 						<label for="name" class="form-label">Nombre del producto:</label>
-						<input type="text" id="name" name="name" placeholder="Ej: Zapatillas Reebok" class="form-input <%= locals.errors && errors.description ? 'is-invalid' : null%>">
+						<input type="text" id="name" name="name" placeholder="Ej: Zapatillas Reebok" class="form-input <%= locals.errors && errors.name ? 'is-invalid' : null%>">
 						<div class="danger">
 						<% if(locals.errors && errors.name)  {%>
 						<%= errors.name.msg %>
@@ -29,7 +29,7 @@
 					</div>
 					<div class="col-12 col-md-6">
 						<label for="price" class="form-label">Precio del producto:</label>
-						<input type="text" id="price" name="price" placeholder="Ej: 5678" class="form-input <%= locals.errors && errors.description ? 'is-invalid' : null%>">
+						<input type="text" id="price" name="price" placeholder="Ej: 5678" class="form-input <%= locals.errors && errors.price ? 'is-invalid' : null%>">
 						<div class="danger">
 						<% if(locals.errors && errors.price)  {%>
 							<%= errors.price.msg %>

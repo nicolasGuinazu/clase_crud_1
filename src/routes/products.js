@@ -8,10 +8,17 @@ const {body}=require('express-validator')
 const productsController = require('../controllers/productsController');
 
 // ************ Validations ************
-const validateEditForm=[
+const validateForm=[
   body('name').notEmpty().withMessage('El campo nombre no puede estar vacio'),
   body('price').notEmpty().withMessage('El campo precio no puede estar vacio'),
-  body('description').notEmpty().withMessage('El campo descripcion no puede estar vacio')
+  body('description').notEmpty().withMessage('El campo descripcion no puede estar vacio'),
+  body('image').custom((value,{req})=>{
+    let file=req.file;
+    if(!file){
+      throw new Error('El campo imagen no puede estar vacio')
+    }
+    return true
+  })
 ]
   
 
@@ -33,7 +40,7 @@ router.get('/', productsController.index);
 
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create/', productsController.create); 
-router.post('/', upload.single('image'), productsController.store); 
+router.post('/', upload.single('image'), validateForm,productsController.store); 
 
 
 /*** GET ONE PRODUCT ***/ 
@@ -41,7 +48,7 @@ router.get('/:identificador/', productsController.detail);
 
 /*** EDIT ONE PRODUCT ***/
 router.get('/:id/edit',productsController.edit); 
-router.put('/:id', validateEditForm,productsController.update); 
+router.put('/:id', validateForm,productsController.update); 
 
 
 /*** DELETE ONE PRODUCT***/ 
